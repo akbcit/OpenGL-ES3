@@ -1,0 +1,5 @@
+﻿  OpenGL_tut.cpp
+MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+  OpenGL_tut.vcxproj -> C:\Users\kumar\OneDrive\Documents\gameDev_C++\cppTuts\OpenGL_tut\x64\Debug\OpenGL_tut.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.
