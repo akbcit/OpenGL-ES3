@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include "Shader.h"
+#include "DrawTriangle.h"
 
 int main(int argc, char* args[]) {
     SDL_Window* window = NULL;
@@ -54,13 +55,6 @@ int main(int argc, char* args[]) {
         return EXIT_FAILURE;
     }
 
-    // Clear the screen to black
-    glClearColor(0.1f, 0.0f, 0.0f, 1.0f); // Set the clear color (RGBA)
-    glClear(GL_COLOR_BUFFER_BIT);         // Clear the color buffer with the clear color
-
-    // Swap the buffers to display the cleared screen
-    SDL_GL_SwapWindow(window);
-
     // Load the shader program and set it for use
     GLuint shaderProg = shaderProgLoad("Simple2D.vert", "Simple2D.frag");
 
@@ -70,12 +64,37 @@ int main(int argc, char* args[]) {
     }
     glUseProgram(shaderProg);
 
+    // Define the vertex data for the triangle
+    Vertex vertices[] = {
+        { 0.0f, -0.9f },
+        { 0.9f, 0.9f },
+        {-0.9f, 0.9f }
+    };
+
+    // Create the VBO and set up the vertex attributes
+    GLuint triangleVBO = drawTriangle(vertices, 3);
+    if (!triangleVBO) {
+        return EXIT_FAILURE;
+    }
+
     // Variable to keep track of whether the user wants to quit
     bool quit = false;
 
     // Main loop: wait for the user to close the window
     while (!quit) {
-        SDL_Event event; // Event handler
+
+        // Event handler
+        SDL_Event event; 
+
+        // Clear the screen to black
+        glClearColor(0.1f, 0.0f, 0.0f, 1.0f); // Set the clear color (RGBA)
+        glClear(GL_COLOR_BUFFER_BIT);         // Clear the color buffer with the clear color
+
+        // Draw the triangle
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        // Swap the buffers to display the drawn triangle
+        SDL_GL_SwapWindow(window);
 
         // Wait for an event (blocking)
         if (SDL_WaitEvent(&event) != 0) {
